@@ -1,8 +1,6 @@
 package com.codelabs.resources;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -24,5 +22,18 @@ public class ProductResource {
         return Response.ok(products).build();
     }
 
-    
+    /**
+     * POST API to add new products
+     * @param product
+     * @return
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createProduct(Product product) {
+        if(products.add(product)) {
+            return Response.status(Response.Status.CREATED).build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
