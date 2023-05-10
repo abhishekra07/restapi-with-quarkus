@@ -54,11 +54,22 @@ public class ProductResource {
     }
 
     @DELETE
-    @Path("/${productId}")
+    @Path("/{productId}")
     public Response deleteProduct(@PathParam("productId") String productId) {
         Optional<Product> product = products.stream().filter(p -> p.getId().equals(productId)).findFirst();
         if(product.isPresent()) {
             products.remove(product.get());
+            return Response.ok(product.get()).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("/{productId}")
+    public Response getProduct(@PathParam("productId") String productId) {
+        Optional<Product> product = products.stream().filter(p -> p.getId().equals(productId)).findFirst();
+        if(product.isPresent()) {
             return Response.ok(product.get()).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
