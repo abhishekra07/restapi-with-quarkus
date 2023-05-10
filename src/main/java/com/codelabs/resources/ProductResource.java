@@ -6,6 +6,8 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/v1/product")
 public class ProductResource {
@@ -36,4 +38,20 @@ public class ProductResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PUT
+    @Path("/{productId}")
+    public Response updateProduct(@PathParam("productId") String productId, Product updatedProduct) {
+        products = products.stream().map(product -> {
+            if(product.getId().equals(productId)) {
+                return updatedProduct;
+            } else {
+                return product;
+            }
+        }).collect(Collectors.toList());
+
+        return Response.ok(products).build();
+    }
+
+    
 }
