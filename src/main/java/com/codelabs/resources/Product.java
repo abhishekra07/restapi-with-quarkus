@@ -1,6 +1,13 @@
 package com.codelabs.resources;
 
 public class Product {
+    public Product(String id, String name, String category, double price) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
+
     private String id;
     private String name;
     private String category;
