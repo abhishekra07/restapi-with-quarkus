@@ -53,5 +53,15 @@ public class ProductResource {
         return Response.ok(products).build();
     }
 
-    
+    @DELETE
+    @Path("/${productId}")
+    public Response deleteProduct(@PathParam("productId") String productId) {
+        Optional<Product> product = products.stream().filter(p -> p.getId().equals(productId)).findFirst();
+        if(product.isPresent()) {
+            products.remove(product.get());
+            return Response.ok(product.get()).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 }
